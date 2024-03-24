@@ -10,6 +10,9 @@ wss.on('connection', (ws) => {
     ws.on('message', (message) => {
         const { action, data } = JSON.parse(message.toString())
         switch (action) {
+            case "connect":
+                user.connect(data)
+                break
             case "join":
                 user.join(data)
                 break

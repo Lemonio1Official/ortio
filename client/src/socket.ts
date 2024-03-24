@@ -1,14 +1,25 @@
 import board, { isGameOver, stepData } from "./store/board";
 import user from "./store/user";
 
+// ws://localhost:8080/
+export const ws = new WebSocket("ws://77.232.143.105:8080/");
+
 const onmessage = (event: any) => {
     if (typeof event.data === "string") {
-        const { action, data } = JSON.parse(event.data);
+        const { action, data, error } = JSON.parse(event.data);
 
         switch (action) {
             case "connect":
+                const id = localStorage.getItem("id")
+                if (id !== null) {
+                    if (id !== data && !error) {
+                        ws.send(JSON.stringify({ action: "connect", data: id }))
+                        return
+                    }
+                }
                 user.update(s => {
                     s.id = data;
+                    localStorage.setItem("id", s.id)
                     return s;
                 });
                 break;

@@ -2,11 +2,9 @@
   import Board from "./components/Board/Board.svelte";
   import Rings from "./components/Rings/Rings.svelte";
   import User from "./components/User/User.svelte";
-  import onmessage from "./socket";
+  import onmessage, { ws } from "./socket";
   import { isGameOver } from "./store/board";
   import user from "./store/user";
-
-  const ws = new WebSocket("ws://77.232.143.105:8080/");
 
   const onPlay = () => {
     user.update(s => {

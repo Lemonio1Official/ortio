@@ -7,7 +7,7 @@
   let userId = "";
 
   const copyId = () => {
-    navigator.clipboard.writeText($user.id);
+    copyText($user.id);
   };
   const onJoin = () => {
     isForm = true;
@@ -20,6 +20,15 @@
     isForm = false;
     userId = "";
   };
+
+  function copyText(text: string) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  }
 </script>
 
 <div class="user">

@@ -14,6 +14,15 @@ class User {
         ws.send(JSON.stringify({ action: "connect", data: this.id }))
     }
 
+    connect(id: string) {
+        const exist = User.users.find(i => i.id === id)
+        if (!exist) {
+            this.id = id
+            this.ws.send(JSON.stringify({ action: "connect", data: this.id }))
+        } else {
+            this.ws.send(JSON.stringify({ action: "connect", data: this.id, error: true }))
+        }
+    }
     join(id: string) {
         const user = User.users.find(i => i.id == id)
         if (this.id !== id && user) {
